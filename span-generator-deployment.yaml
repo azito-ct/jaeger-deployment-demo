@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: span-generator-deployment
+  labels:
+    app: span-generator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: span-generator
+  template:
+    metadata:
+      labels:
+        app: span-generator
+      annotations:
+        sidecar.opentelemetry.io/inject: "true"
+    spec:
+      containers:
+      - name: span-generator
+        image: span-generator:latest
+        imagePullPolicy: Never
+        env:
+        #- name: OTEL_EXPORTER_OTLP_ENDPOINT
+        #  value: http://opentelemetry-collector.search-tools.svc.cluster.local:4317 #Using OpenTelemetry collector
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://jaeger-search-collector.search-tools.svc.cluster.local:4317 #Using Jaeger collector

@@ -1,0 +1,34 @@
+provisionDataStore:
+  cassandra: false
+  elasticsearch: true
+
+agent:
+  enabled: false
+
+storage:
+  type: elasticsearch
+
+  elasticsearch:
+    host: elasticsearch-jaeger-master
+
+elasticsearch:
+  clusterName: "elasticsearch-jaeger"
+  replicas: 1
+  minimumMasterNodes: 1
+  esJavaOpts: "-Xmx128m -Xms128m"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512M"
+    limits:
+      cpu: "1000m"
+      memory: "512M"
+
+collector:
+  service:
+    # In order to enable OpenTelemetry Protocol we need to specify the ports
+    otlp:
+      grpc:
+        port: 4317
+      http:
+        port: 4318

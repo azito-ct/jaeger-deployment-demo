@@ -1,0 +1,12 @@
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: jaeger-search
+spec:
+  strategy: production
+  storage:
+    #type: elasticsearch
+    type: memory
+    options:
+      es:
+        #server-urls: http://elasticsearch:9200
